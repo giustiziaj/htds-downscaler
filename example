@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+
+import logging
+from scaler import Scaler
+
+# Initialize scaler, providing scale factor for image dimensions
+scaler = Scaler(factor=0.125)
+
+# Scale image according to scaler parameters
+scaler.scale(
+  infile='sample.jpg',
+  outfile='smol.jpg')
