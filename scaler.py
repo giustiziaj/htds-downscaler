@@ -25,7 +25,7 @@ class Scaler:
       width, height = self.new_dimensions(src)
       with src.clone() as dest:
         dest.resize(width=width,height=height)
-        logging.info(
+        logging.debug(
           f'Converted "{infile}" ({src.width}x{src.height})'
           f' -> "{outfile}" ({dest.width}x{dest.height})')
         dest.save(filename=outfile)

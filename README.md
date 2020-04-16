@@ -1,11 +1,27 @@
 # HTDS Downscaler
 
-Wrapper around ImageMagick/wand which allows the scale of an image
-to be altered.
+Command line tool which traverses a directory tree, looking for any files with
+a given name.  Uses ImageMagick/wand to rescale image files, and saves them in
+a new location.
 
 ## How To Use
 
-Example code is provided in `./example`
+```
+usage: htds-downscaler [-h] [-n NAME] [-s SCALE] [-v] [-q] top
+
+bulk image rename & rescale
+
+positional arguments:
+  top                   top of filesystem tree to traverse
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n NAME, --name NAME  file name to target
+  -s SCALE, --scale SCALE
+                        scalar multiplier to apply to image dimensions
+  -v, --verbose         set logging level to DEBUG. Increases output
+  -q, --quiet           set logging level to WARN. Reduces output
+```
 
 ## Dependencies
 
