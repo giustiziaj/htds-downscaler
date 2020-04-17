@@ -6,6 +6,7 @@ import os.path
 
 import cli
 from scaler import Scaler
+from bulk_applier import BulkApplier
 
 def destination(filename: str) -> str:
   return os.path.join(
@@ -14,31 +15,14 @@ def destination(filename: str) -> str:
 
 args = cli.get_args()
 
-if args.verbose:
-  logging.basicConfig(level=logging.DEBUG)
-elif args.quiet:
-  logging.basicConfig(level=logging.WARN)
-else:
-  logging.basicConfig(level=logging.INFO)
-
 logging.debug(f'Parsed args: {args}')
 
 scaler = Scaler(factor=args.scale)
 
-logging.info('Finding input files...')
+ba = BulkApplier(
+  apply=scaler.scale,
+  ffilter=lambda x: os.path.basename(x) == args.name,
+  rename=destination
+)
 
-targets = [
-  (infile, destination(infile))
-  for infile in [
-    os.path.join(dirpath, args.name)
-    for dirpath, _, filenames
-    in os.walk(top=args.top)
-    if args.name in filenames
-  ]
-]
-
-logging.info(f'Found {len(targets)} input file(s)')
-logging.debug(f'Input/Output file pairs: {targets}')
-
-for source, dest in targets:
-  scaler.scale(source, dest)
+ba.bulk_apply(top=args.top)
